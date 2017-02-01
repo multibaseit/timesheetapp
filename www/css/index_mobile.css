@@ -1,0 +1,85 @@
+@media all and (max-width:30em){
+
+
+/*LAYOUT*/
+
+div.app_layout{
+padding:3em 0;
+font-size:100%;
+}
+
+
+
+/*OVERLAYS*/
+
+div.overlay_inner{
+padding:2em 0;
+}
+
+
+
+/*ITEM LIST*/
+
+li.list_item{
+padding:1em;
+}
+
+
+
+/*ITEM LIST - MAP*/
+
+ul.directions_list{
+padding:0;
+}
+li.directions_step{
+padding:1em;
+}
+span.directions_distance{
+right:1em;
+}
+
+
+
+/*ITEM FORM*/
+
+div.form_item{
+margin:0 1em;
+}
+div.form_items_add,
+div.form_items_total{
+margin:0 1em;
+}
+div.form_page div.form_buttons{
+margin:0;
+}
+div.button_layout{
+padding:0 0.5em 0 1em;
+}
+div.button_layout+div.button_layout{
+padding:0 1em 0 0.5em;
+}
+div.button_layout button{
+padding:0.75em 0;
+}
+div.button_layout button > span.fa{
+display:block;
+margin:0 0 0.25em 0;
+}
+
+
+
+/*ITEM FORM - NOTES*/
+
+li.note_item{
+padding:1em;
+}
+div.note_text{
+padding:0 1em 0 0;
+}
+div.note_tick{
+right:0;
+}
+
+
+
+}

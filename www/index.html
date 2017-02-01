@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*.gstatic.com https://*.googleapis.com data: gap: 'unsafe-inline' https://ssl.gstatic.com https://www.multibaseit.com.au; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; media-src *; script-src 'self' https://maps.googleapis.com; img-src 'self' data: *; connect-src *;" />
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<link rel="stylesheet" type="text/css" href="css/index_mobile.css" />
+		<link rel="stylesheet" type="text/css" href="css/index_ios.css" />
+		<link rel="stylesheet" type="text/css" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+        <title>Timesheet</title>
+    </head>
+    <body>
+		<div class="app_layout">
+			
+			<!--LOGIN-->
+			<div class="app_page login_page">
+				<div class="login_logo">
+					<img src="img/640x640.png"/>
+				</div>
+				<form class="login_form" action="index.html" method="post">
+					<h2>Timesheet</h2>
+					<div class="form_field">
+						<label for="user">Username</label>
+						<input placeholder="Username" id="user" name="user" type="text" value="Username"/>
+					</div>
+					<div class="form_field">
+						<label for="user">Password</label>
+						<input placeholder="Password" id="pass" name="pass" type="password" value="Password"/>
+					</div>
+					<div class="form_field form_buttons">
+						<input id="login_submit" name="login_submit" type="submit" value="Login"/>
+					</div>
+				</form>
+			</div>
+			
+			<!--LIST-->
+			<div class="app_page list_page">
+				<div class="list_header">
+					<h2>My timesheet</h2>
+					<div class="list_user"></div>
+					<div class="list_update">
+						<span class="fa fa-refresh fa-lg"></span>Last synchronised<span class="update_time"></span>
+					</div>
+					<div class="list_filter clear_after">
+						<form class="search_form" action="index.html" method="post">
+							<div class="form_field">
+								<input placeholder="Search" id="search_value" name="search_value" type="text"/>
+							</div>
+							<span class="fa fa-search"></span>
+							<a class="search_clear">
+								<span class="fa fa-close"></span>
+							</a>
+						</form>
+					</div>
+					<div class="list_toggle">
+						<span class="fa fa-eye-slash toggle_hide"></span>
+						<span class="toggle_hide">Hide Completed</span>
+						<span class="fa fa-eye toggle_show"></span>
+						<span class="toggle_show">Show Completed</span>
+					</div>
+					<div class="list_date">
+						Week beginning <span></span>
+					</div>
+				</div>
+				<ul class="list_items">
+					<li class="list_item clear_after -data-" data-item-index="-data-" data-item-date="-data-">
+						<span class="item_day">-data-</span>
+						<span class="item_date">-data-</span>
+						<span class="item_hours">-data-</span>
+					</li>
+				</ul>
+				<a class="close_button">
+					<span class="fa fa-close"></span>
+				</a>
+			</div>
+			
+			<!--FORM-->
+			<div class="app_page form_page">
+				<form class="item_form" action="index.html" method="post">
+					<div class="item_form_header">
+						<h2>-data- -data-</h2>
+					</div>
+					<div class="location_header">
+						<span class="fa fa-map-marker"></span>
+						<span class="location_check">Checking your location...</span>
+						<span class="location_captured">Your location has been captured</span>
+						<span class="location_error">Your location cannot be verified</span>
+					</div>
+					<div class="form_items">
+						<div class="form_item clear_after -data-">
+							<div class="item_text">
+								<span class="item_code"><span class="fa fa-wrench"></span>-data-</span>
+								<span class="item_name">-data-</span>
+								<input class="item_code_value" id="item_-data-_code" name="item_-data-_code" type="hidden" value="-data-"/>
+							</div>
+							<div class="item_quantity clear_after">
+								<div class="item_picker -data-" data-picker-max="-data-">
+									<span class="picker_active">
+										<span class="active_number"></span>
+									</span>
+									<span class="picker_more">
+										<span class="fa fa-caret-up"></span>
+									</span>
+									<span class="picker_quantity">-data-</span>
+									<span class="picker_less">
+										<span class="fa fa-caret-down"></span>
+									</span>
+									<input class="item_quantity_value" id="item_-data-_value" name="item_-data-_value" type="hidden" value="-data-"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form_items_add clear_after">
+						<span class="add_icon"><span class="fa fa-plus"></span></span>
+						<span class="add_text">Add project</span>
+					</div>
+					<div class="form_items_total clear_after">
+						<span class="total_text">Total hours</span>
+						<span class="total_number">-data-</span>
+					</div>
+					<div class="form_field form_buttons clear_after">
+						<label for="form_total_value">Total hours</label>
+						<input id="form_total_value" name="form_total_value" type="text" value="-data-"/>
+						<label for="form_sign_value">Signature</label>
+						<input class="hidden_field" id="form_sign_value" name="form_sign_value" type="text" value="-data-"/>
+						<label for="form_photo_value">Photo</label>
+						<input class="hidden_field" id="form_photo_value" name="form_photo_value" data-required="true" type="text" value="-data-"/>
+						<label for="form_annotation_value">Photo annotation</label>
+						<input class="hidden_field" id="form_annotation_value" name="form_annotation_value" type="text" value="-data-"/>
+						<label for="form_invoice_value">Timesheet date</label>
+						<input class="hidden_field" id="form_date_value" name="form_date_value" type="text" value="-data-"/>
+						<label for="form_index_value">Timesheet index</label>
+						<input class="hidden_field" id="form_index_value" name="form_index_value" type="text" value="-data-"/>
+						<label for="form_geocode_value">Current geocode</label>
+						<input class="hidden_field" id="form_geocode_value" name="form_geocode_value" type="text" value="-data-"/>
+						<label for="form_timestamp_value">Timestamp</label>
+						<input class="hidden_field" id="form_timestamp_value" name="form_timestamp_value" type="text"/>
+						<div class="button_layout -data-">
+							<button id="form_sign_button" name="form_sign_button">
+								<span class="fa fa-pencil"></span>Sign
+							</button>
+						</div>
+						<div class="button_layout">
+							<button id="form_submit_button" name="form_submit_button">
+								<span class="fa fa-save"></span>Save
+							</button>
+						</div>
+					</div>
+				</form>
+				<a class="close_button">
+					<span class="fa fa-close"></span>
+				</a>
+			</div>
+			
+			<!--NOTE OVERLAY-->
+			<div class="note_page overlay">
+				<div class="note_layout">
+					<ul class="note_list">
+						<li class="note_item clear_after">
+							<div class="note_text">
+								<span class="note_code">-data-</span>
+								<span class="note_name">-data-</span>
+							</div>
+							<div class="note_tick">
+								<span class="fa fa-check fa-lg"></span>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="overlay_icon">
+					<span class="fa fa-wrench fa-2x"></span>
+				</div>
+				<a class="close_button">
+					<span class="fa fa-close"></span>
+				</a>
+			</div>
+							
+			<!--MAP OVERLAY-->
+			<div class="map_page overlay">
+				<div class="map_layout">
+					<div id="map_inner"></div>
+				</div>
+				<div class="overlay_icon map_icon">
+					<span class="fa fa-map-marker fa-2x"></span>
+					<span class="fa fa-refresh fa-spin fa-2x"></span>
+				</div>
+				<div class="map_directions">
+					<ul class="directions_list">
+						<li class="directions_step clear_after">
+							<span class="directions_text">-data-</span>
+							<span class="directions_distance">-data-</span>
+						</li>
+					</ul>
+				</div>
+				<div class="overlay_action map_text_link">
+					<div class="overlay_action_link">
+						<span class="fa fa-level-down fa-rotate-270"></span>
+						<span class="fa fa-map"></span>
+					</div>
+				</div>
+				<a class="close_button">
+					<span class="fa fa-close"></span>
+				</a>
+			</div>
+			
+			<!--SIGNATURE OVERLAY-->
+			<div class="signature_page overlay">
+				<div class="signature_layout canvas_layout">
+					<canvas id="signature_image" height="100" width="100"></canvas>
+				</div>
+				<div class="overlay_icon">
+					<span class="fa fa-pencil fa-2x"></span>
+				</div>
+				<div class="overlay_action signature_clear">
+					<div class="overlay_action_link">
+						<span class="fa fa-trash"></span>
+					</div>
+				</div>
+				<a class="close_button">
+					<span class="fa fa-close"></span>
+				</a>
+			</div>
+			
+			<!--PHOTO OVERLAY-->
+			<div class="photo_page overlay">
+				<div class="photo_layout canvas_layout">
+					<canvas id="photo_image" height="100" width="100"></canvas>
+				</div>
+				<div class="overlay_icon">
+					<span class="fa fa-camera fa-2x"></span>
+				</div>
+				<div class="overlay_action photo_clear">
+					<div class="overlay_action_link">
+						<span class="fa fa-trash"></span>
+					</div>
+				</div>
+				<a class="close_button">
+					<span class="fa fa-close"></span>
+				</a>
+			</div>
+						
+			<!--ERROR OVERLAY-->
+			<div class="error_page overlay">
+				<div class="overlay_layout">
+					<div class="overlay_inner">
+						<span class="icon_error fa fa-exclamation-circle fa-2x"></span>
+						<span class="icon_warning fa fa-info-circle fa-2x"></span>
+						<span class="icon_notification fa fa-check-circle fa-2x"></span>
+						<span class="icon_confirm fa fa-question-circle fa-2x"></span>
+						<div class="error_text"></div>
+						<div class="confirm_buttons clear_after">
+							<a class="confirm_button confirm_no">
+								<span class="icon_confirm fa fa-thumbs-o-down fa-2x"></span>
+								<span>CANCEL</span>
+							</a>
+							<a class="confirm_button confirm_yes">
+								<span class="icon_confirm fa fa-thumbs-o-up fa-2x"></span>
+								<span>OK</span>
+							</a>
+						</div>
+					</div>
+				</div>
+				<a class="close_button">
+					<span class="fa fa-close"></span>
+				</a>
+			</div>
+			
+			<noscript><p>Javascript must be enabled to use this application.</p></noscript>
+		</div>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/signature_pad.min.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+		<div id="google_script" data-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBY1waJYH5-37J203QwZOD_QykCh7SN0VY"></div>
+    </body>
+</html>
