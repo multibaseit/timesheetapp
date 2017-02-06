@@ -1003,7 +1003,11 @@ var App={
 			if(window.localStorage.getItem(App.prefix+'-queue')!=null)q=JSON.parse(window.localStorage.getItem(App.prefix+'-queue'));
 			q[item.form_index_value]=item;
 			window.localStorage.setItem(App.prefix+'-queue',JSON.stringify(q));
-			App.updateItemStatus(item.form_index_value,'Pending',App.loadListData);
+			App.updateItemStatus({
+				id:item.form_index_value,
+				status:'Pending',
+				process:App.loadListData
+			});
 		},
 	
 	//Remove previous submission from processing queue after empty submission
@@ -1049,17 +1053,24 @@ var App={
 		processQueueResponse:function(index){
 			var i=App.removeQueueItem(index);
 			if(!!i){
-				App.updateItemStatus(i.form_index_value,'Submitted',function(){
-					App.uploadImageFile(
-						i.form_photo_value,
-						i.form_index_value+'-'+i.form_timestamp_value
-					);
+				App.updateItemStatus({
+					id:i.form_index_value,
+					status:'Submitted',
+					process:function(){
+						App.uploadImageFile({
+							file:i.form_photo_value,
+							id:i.form_index_value+'-'+i.form_timestamp_value
+						});
+					}
 				});
 			}
 		},
 		
 	//Update item status in stored list data
-		updateItemStatus:function(id,status,process){
+		updateItemStatus:function(args){
+			var id=args.id,
+				status=args.status;
+			if(typeof args.process==='function')process=args.process;
 			var q=JSON.parse(window.localStorage.getItem(App.prefix+'-data'));
 			//q[id].ItemStatus=status;
 			q.TimeSheet[id].ItemStatus=status;
@@ -1069,7 +1080,9 @@ var App={
 		},
 		
 	//Upload image file
-		uploadImageFile:function(url,id){
+		uploadImageFile:function(args){
+			var url=args.url,
+				id=args.id;
 			if(window.cordova&&url.indexOf(' ')<0){
 				var o=new window.FileUploadOptions();
 					o.fileKey="file";
