@@ -18,6 +18,7 @@ var App={
 				App.template.reviewHeader=$('.review_header')[0].outerHTML.replace(/\t|\r|\n/gi,'');
 				App.template.reviewItem=$('.review_item')[0].outerHTML.replace(/\t|\r|\n/gi,'');
 				App.template.reviewFooter=$('.review_footer')[0].outerHTML.replace(/\t|\r|\n/gi,'');
+				App.template.reviewCaption=$('.review_caption')[0].outerHTML.replace(/\t|\r|\n/gi,'');
 				$('.review_item').remove();
 			//Login form handler
 				$('.login_form').on('submit',App.submitLogin);
@@ -134,6 +135,10 @@ var App={
 				App.cancelForm($('.item_form_header').attr('data-form-id'));
 				return true;
 			}
+			if($('.load_page').hasClass('active_page')){
+				App.buildList();
+				return true;
+			}
 		},
 	
 	//Show and hide overlay panel
@@ -169,7 +174,8 @@ var App={
 	//Validate login credentials
 		authenticateLogin:function(){
 			var u=$('#user').val();
-			App.data.form.user=u.charAt(0).toUpperCase()+u.substring(1).toLowerCase();
+			App.data.user.username=u.charAt(0).toUpperCase()+u.substring(1).toLowerCase();
+			App.data.user.password=$('#pass').val();
 			return true;
 		},
 	
@@ -207,8 +213,6 @@ var App={
 					force==true){
 						$.ajax({
 							url:'http://api.jdvcentral.australis.net.au/api/ProjectList',
-							//url:'http://jdvcentralapi/api/ProjectList',
-							//url:'http://203.23.177.147/api/ProjectList',
 							dataType:'json',
 							crossDomain:true,
 							method:'POST',
@@ -227,15 +231,7 @@ var App={
 				}
 				else App.buildList();
 			}
-			else{
-				/*if(!$('.error_page').hasClass('active_overlay'))App.showMessage({
-					type:'warning',
-					text:App.message.offlineUpdate,
-					process:App.buildList
-				});
-				else App.buildList();*/
-				App.buildList();
-			}
+			else App.buildList();
 		},
 		
 	//Store loaded list data 
@@ -318,7 +314,7 @@ var App={
 					i++;
 				}
 				window.localStorage.setItem(App.prefix+'-user-data',JSON.stringify(u));
-				$('.list_items').fadeIn().removeClass('filtered').html(h.join(''));
+				$('.list_items').removeClass('filtered').html(h.join(''));
 			//Bind events for list items
 				$('.list_items .list_item').each(function(){
 					$(this).on('click',function(){
@@ -367,12 +363,14 @@ var App={
 	//Force reload from server
 		forceListLoad:function(){
 			if(window.navigator.onLine==true){
-				/*$('.list_update .fa').addClass('fa-spin');
-				$('.list_items').fadeOut(function(){
-					App.loadListData(true);
-				});*/
-				App.showPage('.load_page');
-				//HERE load the data
+				App.showMessage({
+					type:'confirm',
+					text:App.message.forceLoad,
+					process:function(){
+						App.showPage('.load_page',true);
+						App.loadListData(true);
+					}
+				});
 			}
 			else App.showMessage({
 				type:'error',
@@ -395,7 +393,6 @@ var App={
 	//Generate item form
 		buildForm:function(id){
 			var f=JSON.parse(window.localStorage.getItem(App.prefix+'-user-data')),
-				//t=f.TimeSheet[parseInt(id)],
 				t=f[parseInt(id)],
 				s=App.template.itemForm.split('-data-'),
 				h=[];
@@ -424,17 +421,6 @@ var App={
 				else $(this).find('.item_code > span').hide();
 				App.bindFormItemEvents($(this));
 			});
-			/*$('.item_form .picker_less,.item_form .picker_more').each(function(){
-				App.bindItemPicker($(this));
-			});
-			$('.item_form .item_start').off().on('click',function(){
-				App.data.form.clock=$(this);
-				App.initialiseClockPanel($('#form_start_value').val());
-			});
-			$('.item_form .item_finish').off().on('click',function(){
-				App.data.form.clock=$(this);
-				App.initialiseClockPanel($('#form_finish_value').val());
-			});*/
 		//Bind clock panel events
 			$('.clock_split_24').off().on('click',function(){
 				App.setClockSplit(24,$(this));
@@ -466,13 +452,10 @@ var App={
 			});
 		//Bind item add event
 			$('.form_items_add').off().on('click',function(){
-				//$('.item_picker').removeClass('active');
 				if($('.form_item').length>1||!$('.form_item').first().hasClass('new')){
 					$('.form_items').append(App.addFormItems());
 					App.bindFormItemEvents($('.form_item').last().find('.item_text'));
 				}
-				//App.bindItemPicker($('.form_item').last().find('.picker_less'));
-				//App.bindItemPicker($('.form_item').last().find('.picker_more'));
 				$('.form_item').last().find('.item_text').trigger('activate');
 			});
 		//Bind signature events
@@ -591,22 +574,6 @@ var App={
 		
 	//Update total hours for form
 		updateFormTotal:function(){
-			/*
-			var t,m=0,h,s,f;
-			$('.item_times').each(function(){
-				f=parseInt($(this).find('.item_finish_value').val());
-				s=parseInt($(this).find('.item_start_value').val());
-				if(!isNaN(f)&&!isNaN(s))m+=(f-s)/60000;
-			});
-			h=Math.round(m/60);
-			m=m%60;
-			if(!isNaN(h)&&!isNaN(m)){
-				t=h+':'+((m<10)?'0'+m:m);
-				$('#form_total_value').val(t);
-				$('.total_number').html(t);
-				App.data.form.total=t;
-			}
-			*/
 			var v,t,h,m=0;
 			$('.item_times').each(function(){
 				v=App.getClockDuration($(this)).minutes;
@@ -649,8 +616,6 @@ var App={
 		
 	//Initialise note panel
 		showListPanel:function(){
-			//$('.active_overlay').removeClass('active_overlay').hide();
-			//$('body').addClass('no_scroll');
 			$('.note_page .close_button').off().on('click',function(){
 				if($('.note_list li.active').length>0&&$('.note_list li.active .note_value').val()!=''){
 					$(App.data.form.item).children('.item_code').html($('.note_list li.active .note_code').text());
@@ -658,7 +623,6 @@ var App={
 					$(App.data.form.item).children('.item_code_value').val($('.note_list li.active .note_code').text());
 					$(App.data.form.item).siblings('.item_times').removeClass('disabled');
 					$('.form_item.new').removeClass('new');
-					//$('.note_page').fadeOut();
 					App.hideOverlay();
 				}
 				else{
@@ -666,7 +630,6 @@ var App={
 					App.updateFormTotal();
 					if($('.form_item').length==0)$('.form_items').append(App.addFormItems());
 					App.bindFormItemEvents($('.form_item').last().find('.item_text'));
-					//$('.note_page').fadeOut();
 					App.hideOverlay();
 				}
 			});
@@ -704,7 +667,6 @@ var App={
 				$(this).trigger('activate');
 			}).on('store',App.addListItem).on('keypress',function(event){
 				if(event.which==13)$(this).trigger('store');
-				//return event.which!=13;
 			});
 			$('.note_list li').not('li:first-child').each(function(){
 				if($(this).find('.note_code').html()==$(App.data.form.item).find('.item_code_value').val())$(this).addClass('active');
@@ -717,7 +679,6 @@ var App={
 					$('.note_page .close_button').trigger('click');
 				});
 			});
-			//$('.note_page').addClass('active_overlay').fadeIn();
 			App.showOverlay('.note_page');
 		},
 	
@@ -735,12 +696,10 @@ var App={
 	
 	//Initialise clock panel
 		initialiseClockPanel:function(timestamp){
-			//$('.active_overlay').removeClass('active_overlay').hide();
 			$('.clock_page .close_button').off().on('click',function(){
 				if(App.validateClockTime()==true){
 					$(App.data.form.clock).find('label > span').html($('.clock_hours .number_active .split_active').text()+':'+$('.clock_mins .number_active').text());
 					$(App.data.form.clock).addClass('completed');
-					//$('.clock_page').fadeOut();
 					App.hideOverlay();
 				}
 				else App.showMessage({
@@ -782,7 +741,6 @@ var App={
 			$('.clock_hours,.clock_hand_hours').show();
 			$('.clock_mins,.clock_hand_mins').hide();
 			App.setClockTime();
-			//$('.clock_page').addClass('active_overlay').fadeIn();
 			App.showOverlay('.clock_page');
 		},
 	
@@ -986,7 +944,18 @@ var App={
 				a=App.template.reviewHeader.split('-data-'),
 				b=App.template.reviewItem.split('-data-'),
 				c=App.template.reviewFooter.split('-data-'),
+				r=App.template.reviewCaption.split('-data-'),
 				i=0,h=[];
+			if(typeof window.cordova!='undefined'){
+				h.push(
+					r[0]+window.device.manufacturer+
+					r[1]+window.device.platform+
+					r[2]+window.device.version+
+					r[3]+window.device.uuid+
+					r[4]+window.device.serial+
+					r[5]
+				);
+			}
 			while(i<d.length){
 				if(!!d[i].ItemData)h.push(
 					App.addReviewItems(a,b,c,d[i])
@@ -1024,7 +993,6 @@ var App={
 					item[3]
 				);
 				if(i==data.ItemData.form_items.length-1)h.push(
-					//footer[0]+data.ItemData.form_sign_value+
 					footer[0]+((data.ItemData.form_sign_value.indexOf('data:')==0)?'':'NO ')+'Signature provided'+
 					footer[1]
 				);
@@ -1099,7 +1067,6 @@ var App={
 						App.processQueueResponse(i.form_index_value);
 					},
 					error:function(request,status,error){
-						//alert('processQueue');
 						App.showServerError(request,status,error);
 					}
 				});
@@ -1211,6 +1178,7 @@ var App={
 		
 	//Persistent variables
 		data:{
+			user:{},
 			list:{},
 			map:{},
 			form:{},
@@ -1225,7 +1193,7 @@ var App={
 		message:{
 			logOutPrompt:'You will be logged out',
 			invalidLogin:'Please enter a valid username and password',
-			offlineUpdate:'Your project list will be updated next time your device is online',
+			offlineUpdate:'Your projects will be updated next time your device is online',
 			updateError:'There was an error communicating with the server  Do you want to try again?',
 			cancelForm:'Any new entries or changes will not be saved',
 			incompleteForm:'You must obtain a signature to save this timesheet',
@@ -1234,7 +1202,8 @@ var App={
 			sendSuccess:'Your timesheet has been submitted successfully',
 			sendFailure:'Your timesheet could not be submitted  Please try again later',
 			sendOffline:'Your timesheet cannot be submitted while your device is offline',
-			dataCleared:'Stored data has been cleared'
+			dataCleared:'Stored data has been cleared',
+			forceLoad:'Your projects will be updated'
 		}
 };
 

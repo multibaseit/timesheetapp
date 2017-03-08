@@ -1171,6 +1171,8 @@ margin:2em 0 0 0;
 border:0;
 border-collapse:collapse;
 }
+table.review_list tfoot{
+}
 table.review_list th,
 table.review_list td{
 padding:1em;
