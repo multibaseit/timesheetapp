@@ -1,2 +1,2 @@
 # timesheetapp
-Timesheet app - timesheet and signature
+Timesheet app - offline performance, time picker and signature
