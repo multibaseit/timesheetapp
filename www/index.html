@@ -5,7 +5,7 @@
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
 		<meta name="msapplication-tap-highlight" content="no" />
 		<meta name="format-detection" content="telephone=no">
-		<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*.gstatic.com https://*.googleapis.com data: gap: 'unsafe-inline' https://ssl.gstatic.com https://www.multibaseit.com.au; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; media-src *; script-src 'self' https://maps.googleapis.com; img-src 'self' data: *; connect-src *;" />
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*.gstatic.com https://*.googleapis.com data: gap: 'unsafe-inline' https://ssl.gstatic.com https://www.multibaseit.com.au; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; media-src *; script-src 'self' https://maps.googleapis.com https://www.multibaseit.com.au; img-src 'self' data: *; connect-src *;" />
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
 		<link rel="stylesheet" type="text/css" href="css/index_mobile.css" />
 		<link rel="stylesheet" type="text/css" href="css/index_ios.css" />
@@ -14,6 +14,15 @@
     </head>
     <body>
 		<div class="app_layout">
+			
+			<!--LOAD-->
+			<div class="load_page overlay active_page">
+				<div class="overlay_layout">
+					<div class="overlay_inner">
+						<span class="fa fa-refresh fa-3x fa-spin"></span>
+					</div>
+				</div>
+			</div>
 			
 			<!--LOGIN-->
 			<div class="app_page login_page">
@@ -38,13 +47,10 @@
 			
 			<!--LIST-->
 			<div class="app_page list_page">
-				<div class="list_header">
+				<div class="list_header clear_after">
 					<h2>My timesheet</h2>
-					<div class="list_user"></div>
-					<div class="list_update">
-						<span class="fa fa-refresh fa-lg"></span>Last synchronised<span class="update_time"></span>
-					</div>
-					<div class="list_filter clear_after">
+					<!--div class="list_user"></div-->
+					<!--div class="list_filter clear_after">
 						<form class="search_form" action="index.html" method="post">
 							<div class="form_field">
 								<input placeholder="Search" id="search_value" name="search_value" type="text"/>
@@ -54,19 +60,24 @@
 								<span class="fa fa-close"></span>
 							</a>
 						</form>
+					</div-->
+					<div class="list_update">
+						<span class="fa fa-refresh"></span>
+						<span>Reload<span class="update_time"></span></span>
 					</div>
 					<div class="list_toggle">
 						<span class="fa fa-eye-slash toggle_hide"></span>
-						<span class="toggle_hide">Hide Completed</span>
+						<span class="toggle_hide">Hide</span>
 						<span class="fa fa-eye toggle_show"></span>
-						<span class="toggle_show">Show Completed</span>
+						<span class="toggle_show">Show</span>
 					</div>
-					<div class="list_date">
-						Week beginning <span></span>
+					<div class="list_submit">
+						<span class="fa fa-paper-plane"></span>
+						<span>Submit</span>
 					</div>
 				</div>
 				<ul class="list_items">
-					<li class="list_item clear_after -data-" data-item-index="-data-" data-item-date="-data-">
+					<li class="list_item clear_after-data-" data-item-index="-data-" data-item-date="-data-">
 						<span class="item_day">-data-</span>
 						<span class="item_date">-data-</span>
 						<span class="item_hours">-data-</span>
@@ -80,7 +91,7 @@
 			<!--FORM-->
 			<div class="app_page form_page">
 				<form class="item_form" action="index.html" method="post">
-					<div class="item_form_header">
+					<div class="item_form_header" data-form-id="-data-">
 						<h2>-data- -data-</h2>
 					</div>
 					<div class="location_header">
@@ -96,19 +107,16 @@
 								<span class="item_name">-data-</span>
 								<input class="item_code_value" id="item_-data-_code" name="item_-data-_code" type="hidden" value="-data-"/>
 							</div>
-							<div class="item_quantity clear_after">
-								<div class="item_picker -data-" data-picker-max="-data-">
-									<span class="picker_active">
-										<span class="active_number"></span>
-									</span>
-									<span class="picker_more">
-										<span class="fa fa-caret-up"></span>
-									</span>
-									<span class="picker_quantity">-data-</span>
-									<span class="picker_less">
-										<span class="fa fa-caret-down"></span>
-									</span>
-									<input class="item_quantity_value" id="item_-data-_value" name="item_-data-_value" type="hidden" value="-data-"/>
+							<div class="item_times -data- clear_after">
+								<div class="item_time item_start">
+									<span>Start</span>
+									<label for="item_-data-_start_value"><span>-data-</span></label>
+									<input class="item_start_value" id="item_-data-_start_value" name="item_-data-_start_value" data-required="true" type="hidden" value="-data-"/>
+								</div>
+								<div class="item_time item_finish">
+									<span>Finish</span>
+									<label for="item_-data-_finish_value"><span>-data-</span></label>
+									<input class="item_finish_value" id="item_-data-_finish_value" name="item_-data-_finish_value" data-required="true" type="hidden" value="-data-"/>
 								</div>
 							</div>
 						</div>
@@ -122,7 +130,7 @@
 						<span class="total_number">-data-</span>
 					</div>
 					<div class="form_field form_buttons clear_after">
-						<label for="form_total_value">Total hours</label>
+						<label for="form_total_value">Form total</label>
 						<input id="form_total_value" name="form_total_value" type="text" value="-data-"/>
 						<label for="form_sign_value">Signature</label>
 						<input class="hidden_field" id="form_sign_value" name="form_sign_value" type="text" value="-data-"/>
@@ -130,9 +138,9 @@
 						<input class="hidden_field" id="form_photo_value" name="form_photo_value" data-required="true" type="text" value="-data-"/>
 						<label for="form_annotation_value">Photo annotation</label>
 						<input class="hidden_field" id="form_annotation_value" name="form_annotation_value" type="text" value="-data-"/>
-						<label for="form_invoice_value">Timesheet date</label>
+						<label for="form_invoice_value">Form date</label>
 						<input class="hidden_field" id="form_date_value" name="form_date_value" type="text" value="-data-"/>
-						<label for="form_index_value">Timesheet index</label>
+						<label for="form_index_value">Form index</label>
 						<input class="hidden_field" id="form_index_value" name="form_index_value" type="text" value="-data-"/>
 						<label for="form_geocode_value">Current geocode</label>
 						<input class="hidden_field" id="form_geocode_value" name="form_geocode_value" type="text" value="-data-"/>
@@ -145,11 +153,42 @@
 						</div>
 						<div class="button_layout">
 							<button id="form_submit_button" name="form_submit_button">
-								<span class="fa fa-save"></span>Save
+								<span class="fa fa-save"></span><span class="fa fa-refresh fa-spin"></span>Save
 							</button>
 						</div>
 					</div>
 				</form>
+				<a class="close_button">
+					<span class="fa fa-close"></span>
+				</a>
+			</div>
+			
+			<!--REVIEW-->
+			<div class="app_page review_page">
+				<div class="overlay_icon">
+					<span class="fa fa-paper-plane fa-2x"></span>
+				</div>
+				<table class="review_list" cellpadding="10" cellspacing="0" border="1" style="font-family:Arial;sans-serif;">
+					<tr class="review_header">
+						<th class="review_day" colspan="2" valign="top">
+							<span>-data-</span> <span>-data-</span>
+						</th>
+						<th class="review_hours" valign="top" align="right">-data-</th>
+					</tr>
+					<tr class="review_item">
+						<td class="review_code" valign="top">-data-</td>
+						<td class="review_name" valign="top">-data-</td>
+						<td class="review_time" valign="top" align="right">-data-</td>
+					</tr>
+					<tr class="review_footer">
+						<td class="review_sign" colspan="3">-data-</td>
+					</tr>
+				</table>
+				<div class="button_layout">
+					<button id="form_send_button" name="form_send_button">
+						<span class="fa fa-check"></span>Send
+					</button>
+				</div>
 				<a class="close_button">
 					<span class="fa fa-close"></span>
 				</a>
@@ -161,8 +200,12 @@
 					<ul class="note_list">
 						<li class="note_item clear_after">
 							<div class="note_text">
+								<span class="note_icon">
+									<span class="fa fa-pencil"></span>
+								</span>
 								<span class="note_code">-data-</span>
 								<span class="note_name">-data-</span>
+								<input class="note_value" type="text" value="-data-"/>
 							</div>
 							<div class="note_tick">
 								<span class="fa fa-check fa-lg"></span>
@@ -177,28 +220,92 @@
 					<span class="fa fa-close"></span>
 				</a>
 			</div>
-							
-			<!--MAP OVERLAY-->
-			<div class="map_page overlay">
-				<div class="map_layout">
-					<div id="map_inner"></div>
-				</div>
-				<div class="overlay_icon map_icon">
-					<span class="fa fa-map-marker fa-2x"></span>
-					<span class="fa fa-refresh fa-spin fa-2x"></span>
-				</div>
-				<div class="map_directions">
-					<ul class="directions_list">
-						<li class="directions_step clear_after">
-							<span class="directions_text">-data-</span>
-							<span class="directions_distance">-data-</span>
-						</li>
-					</ul>
-				</div>
-				<div class="overlay_action map_text_link">
-					<div class="overlay_action_link">
-						<span class="fa fa-level-down fa-rotate-270"></span>
-						<span class="fa fa-map"></span>
+			
+			<!--CLOCK OVERLAY-->
+			<div class="clock_page overlay">
+				<div class="overlay_layout">
+					<div class="overlay_inner">
+						<div class="clock_time">
+							<span class="display_hours">HH</span>:<span class="display_mins">MM</span>
+						</div>
+						<div class="clock_face">
+							<div class="clock_ring clock_hours">
+								<div class="clock_number clock_0">
+									<span class="display_split_12">00</span>
+									<span class="display_split_24">12</span>
+								</div>
+								<div class="clock_number clock_1">
+									<span class="display_split_12">01</span>
+									<span class="display_split_24">13</span>
+								</div>
+								<div class="clock_number clock_2">
+									<span class="display_split_12">02</span>
+									<span class="display_split_24">14</span>
+								</div>
+								<div class="clock_number clock_3">
+									<span class="display_split_12">03</span>
+									<span class="display_split_24">15</span>
+								</div>
+								<div class="clock_number clock_4">
+									<span class="display_split_12">04</span>
+									<span class="display_split_24">16</span>
+								</div>
+								<div class="clock_number clock_5">
+									<span class="display_split_12">05</span>
+									<span class="display_split_24">17</span>
+								</div>
+								<div class="clock_number clock_6">
+									<span class="display_split_12">06</span>
+									<span class="display_split_24">18</span>
+								</div>
+								<div class="clock_number clock_7">
+									<span class="display_split_12">07</span>
+									<span class="display_split_24">19</span>
+								</div>
+								<div class="clock_number clock_8">
+									<span class="display_split_12">08</span>
+									<span class="display_split_24">20</span>
+								</div>
+								<div class="clock_number clock_9">
+									<span class="display_split_12">09</span>
+									<span class="display_split_24">21</span>
+								</div>
+								<div class="clock_number clock_10">
+									<span class="display_split_12">10</span>
+									<span class="display_split_24">22</span>
+								</div>
+								<div class="clock_number clock_11">
+									<span class="display_split_12">11</span>
+									<span class="display_split_24">23</span>
+								</div>
+							</div>
+							<div class="clock_ring clock_mins">
+								<div class="clock_number clock_0">00</div>
+								<div class="clock_number clock_1">05</div>
+								<div class="clock_number clock_2">10</div>
+								<div class="clock_number clock_3">15</div>
+								<div class="clock_number clock_4">20</div>
+								<div class="clock_number clock_5">25</div>
+								<div class="clock_number clock_6">30</div>
+								<div class="clock_number clock_7">35</div>
+								<div class="clock_number clock_8">40</div>
+								<div class="clock_number clock_9">45</div>
+								<div class="clock_number clock_10">50</div>
+								<div class="clock_number clock_11">55</div>
+							</div>
+							<div class="clock_hands">
+								<div class="clock_hand_hours"></div>
+								<div class="clock_hand_mins"></div>
+							</div>
+						</div>
+						<div class="clock_split clear_after">
+							<div class="clock_split_12"><span>AM</span></div>
+							<div class="clock_split_icon"><span class="fa fa-adjust fa-lg"></span></div>
+							<div class="clock_split_24"><span>PM</span></div>
+						</div>
+						<div class="overlay_icon">
+							<span class="fa fa-clock-o fa-2x"></span>
+						</div>
 					</div>
 				</div>
 				<a class="close_button">
@@ -215,24 +322,6 @@
 					<span class="fa fa-pencil fa-2x"></span>
 				</div>
 				<div class="overlay_action signature_clear">
-					<div class="overlay_action_link">
-						<span class="fa fa-trash"></span>
-					</div>
-				</div>
-				<a class="close_button">
-					<span class="fa fa-close"></span>
-				</a>
-			</div>
-			
-			<!--PHOTO OVERLAY-->
-			<div class="photo_page overlay">
-				<div class="photo_layout canvas_layout">
-					<canvas id="photo_image" height="100" width="100"></canvas>
-				</div>
-				<div class="overlay_icon">
-					<span class="fa fa-camera fa-2x"></span>
-				</div>
-				<div class="overlay_action photo_clear">
 					<div class="overlay_action_link">
 						<span class="fa fa-trash"></span>
 					</div>
