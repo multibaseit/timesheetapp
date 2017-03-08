@@ -2,7 +2,7 @@
 <widget id="com.multibaseit.timesheetapp" version="1.0.0" versionCode="1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Timesheet</name>
     <description>
-        Timesheet app - timesheet and signature
+        Timesheet app - offline performance, time picker and signature
     </description>
     <author email="mattc@mbase.com.au" href="http://www.multibaseit.com.au">
         Matt Carey, Multibase
